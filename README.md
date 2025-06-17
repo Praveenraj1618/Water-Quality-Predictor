@@ -1,1 +1,3 @@
-The Project is about Predicting the Quality of Water based on few metrics using machine learning techniques  specifically MultiOutputRegressor wrapped around a RandomForestRegressor.Then classify the water into categories by quality level.
+# Water Quality Prediction 
+
+The Project aims to Predict Quality of Water based on few metrics using machine learning techniques  specifically MultiOutputRegressor wrapped around a RandomForestRegressor.Then classify the water into categories by quality level.
