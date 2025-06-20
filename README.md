@@ -14,12 +14,12 @@ The model predicts multiple water quality parameters such as:
 
 ---
 
-## Model Performance
+## Internship Details
 
-The model was evaluated using:
+- **Internship Type**: AICTE Virtual Internship - Edunet Foundation
+- **Sponsor**: Shell  
+- **Duration**: June 2025 (4 weeks)  
+- **Focus Area**: Artificial Intelligence & Machine Learning in Green Technology
 
-- **R² Score**
-- **Mean Squared Error (MSE)**
-
-Performance was acceptable across all parameters
+---
 
