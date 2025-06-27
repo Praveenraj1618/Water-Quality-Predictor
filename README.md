@@ -1,6 +1,6 @@
 # Water Quality Prediction 
 
-The Project aims to Predict Quality of Water based on few metrics using machine learning techniques  specifically MultiOutputRegressor wrapped around a RandomForestRegressor.Then classify the water into categories by quality level.
+The project aims to predict the quality of water based on selected chemical metrics using machine learning techniques — specifically, a `MultiOutputRegressor` wrapped around an `XGBoostRegressor`. Multiple models were compared, and XGBoost demonstrated superior performance in terms of accuracy and generalization. The predicted pollutant concentrations can later be used to classify water quality into categories based on established threshold values.
 
 ## Predicted Water Quality Parameters
 
@@ -8,11 +8,13 @@ The model predicts multiple water quality parameters such as:
 
 - NH4
 - BOD5 (BSK5)
-- Colloids
-- O2, NO3, NO2, SO4, PO4 and 
-- CL
-
----
+- Suspended Solids (Colloids)
+- O2 (Dissolved Oxygen)
+- NO3 (Nitrate)
+- NO2 (Nitrite)
+- SO4 (Sulfate)
+- PO4 (Phosphate)
+- CL (Chloride)
 
 ## Internship Details
 
