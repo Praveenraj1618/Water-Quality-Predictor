@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Water Quality Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="{{ url_for('static', filename='darkmode.js') }}"></script>
+</head>
+<body>
+  <div class="dark-toggle">
+    <label>
+      <input type="checkbox" onclick="toggleDarkMode()" />
+      🌙 Dark Mode
+    </label>
+  </div>
+
+  <div class="container">
+    <div class="left-panel">
+
+      <h3>💧 Input Parameters</h3>
+      <form method="POST" action="/predict">
+        <label>Enter Year:</label>
+        <input type="text" name="year" placeholder="e.g. 2024" required>
+        <label>Select Station ID:</label>
+        <select name="station_id" required>
+            {% for i in range(1, 23) %}
+              <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
+          
+        <button type="submit">Predict</button>
+      </form>
+      <div class="export-buttons">
+        <a href="/export/csv">⬇️ CSV</a>
+        <a href="/export/pdf">📄 PDF</a>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <h2>💧 Water Quality Prediction Dashboard</h2>
+      {% if pollutants %}
+        <h4>📍 Station: {{ request.form['station_id'] }} | Year: {{ request.form['year'] }}</h4>
+
+        <table class="pollutant-table">
+          <thead>
+            <tr><th>Pollutant</th><th>Value (mg/L)</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            {% for key, val in pollutants.items() %}
+              <tr>
+                <td>{{ key }}</td>
+                <td>{{ val }}</td>
+                <td>{% if statuses[key] == 'Safe' %}<span class="safe">✅ Safe</span>{% else %}<span class="polluted">❌ Polluted</span>{% endif %}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="overall-status {{ overall }}">
+          ⚠️ Overall Water Quality: {{ overall }}
+        </div>
+
+        <div class="chart-wrap">
+          <canvas id="barChart"></canvas>
+        </div>
+
+        <script>
+          const labels = {{ labels|tojson }};
+          const values = {{ values|tojson }};
+          const statuses = {{ statuses|tojson }};
+          const colors = labels.map(label => statuses[label] === 'Safe' ? '#66bb6a' : '#ef5350');
+
+          new Chart(document.getElementById('barChart'), {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Pollutant Level (mg/L)',
+                data: values,
+                backgroundColor: colors
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Pollutant Concentration (mg/L)' }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  title: { display: true, text: 'mg/L' }
+                }
+              }
+            }
+          });
+        </script>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>
